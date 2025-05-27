@@ -28,24 +28,43 @@
 ## 🗂 Estructura del proyecto
 
 sana/
+
 ├── main.py # Punto de entrada
+
 ├── ui/ # Interfaz gráfica
+
 │ ├── ventana_principal.py
+
 │ ├── ventana_transacciones.py
+
 │ ├── ventana_categorias.py
+
 │ └── estilos.py
+
 ├── controllers/ # Lógica de control
+
 │ ├── transacciones_controller.py
+
 │ └── categorias_controller.py
+
 ├── models/ # Estructura de datos
+
 │ ├── transaccion.py
+
 │ └── categoria.py
+
 ├── db/ # Acceso a base de datos
+
 │ ├── conexion.py
+
 │ └── inicializar_db.py
+
 ├── utils/ # Funciones auxiliares
+
 │ └── helpers.py
+
 └── data/
+
 └── sana.db # Base de datos SQLite
 
 
@@ -63,6 +82,7 @@ cd sana
 3. Ejecuta el archivo principal:
 
 python main.py
+```
 
 📚 Requisitos del curso
 Este proyecto forma parte del programa formativo, y se desarrolla de manera guiada en clase. Al completarlo, habrás puesto en práctica:
