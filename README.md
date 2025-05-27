@@ -75,7 +75,7 @@ sana/
 1. Clona el repositorio:
 
 ```bash
-git clone https://github.com/tu-usuario/sana.git
+git clone https://github.com/letitech/sana.git
 cd sana
 2. Asegúrate de tener Python 3 instalado.
 
