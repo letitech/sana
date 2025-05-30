@@ -1,15 +1,16 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import font
+from view.category_frame import CategoryFrame
 
 class Dashboard(tk.Tk):
-    def __init__(self, login):
+    def __init__(self, login, user):
         super().__init__()
         self.title("SANA")
         self.geometry("900x650")
         self.configure(bg="#2c3e50")
         
         self.login_window = login
+        self.current_user = user
 
         # Configurar estilos
         self.configure_styles()
@@ -18,8 +19,10 @@ class Dashboard(tk.Tk):
         self.visible_menu = True
         self.active_boton = None
         
+        # Centrar ventana
+        self.center_window()
         self.create_interface()
-    
+
     def configure_styles(self):
         style = ttk.Style()
         
@@ -43,6 +46,15 @@ class Dashboard(tk.Tk):
                        focuscolor="none",
                        font=("Arial", 10, "bold"))
     
+    def center_window(self):
+        """Centrar la ventana en la pantalla"""
+        self.update_idletasks()
+        width = self.winfo_width()
+        height = self.winfo_height()
+        x = (self.winfo_screenwidth() // 2) - (width // 2)
+        y = (self.winfo_screenheight() // 2) - (height // 2)
+        self.geometry(f'{900}x{650}+{x}+{y}')
+
     def create_interface(self):
         # Frame principal
         self.main_frame = tk.Frame(self, bg="#2c3e50")
@@ -86,10 +98,10 @@ class Dashboard(tk.Tk):
         # Botones del menú con iconos (usando caracteres Unicode)
         self.menu_items = [
             ("🏠 Inicio", self.show_home),
+            ("📊 Categorías", self.show_category),
+            ("📝 Transacciones", self.show_profile),
             ("👤 Perfil", self.show_profile),
-            ("📊 Dashboard", self.show_dashboard),
             ("⚙️ Configuración", self.show_configuration),
-            ("📞 Contacto", self.show_contact),
             ("❓ Ayuda", self.show_help),
             ("🚪 Salir", self.exit)
         ]
@@ -146,7 +158,7 @@ class Dashboard(tk.Tk):
     
     def create_content(self):
         self.content_container = tk.Frame(self.content_frame, bg="#ecf0f1")
-        self.content_container.pack(fill=tk.BOTH, expand=True, padx=20, pady=60)
+        self.content_container.pack(fill=tk.BOTH, expand=True)
         
         welcome_label = tk.Label(self.content_container, 
                                text="Bienvenido a SANA",
@@ -164,6 +176,11 @@ class Dashboard(tk.Tk):
         tk.Label(self.content_container, text="Esta es la página principal de la aplicación",
                 bg="#ecf0f1", font=("Arial", 12)).pack()
     
+    def show_category(self):
+        self.clear_content()
+        category = CategoryFrame(self.content_container, self.current_user[0])
+        category.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
     def show_profile(self):
         self.clear_content()
         tk.Label(self.content_container, text="👤 PERFIL DE USUARIO", 
@@ -178,22 +195,6 @@ class Dashboard(tk.Tk):
         
         tk.Label(form_frame, text="Email:", bg="#ecf0f1").grid(row=1, column=0, sticky="w", pady=5)
         tk.Entry(form_frame, width=30).grid(row=1, column=1, padx=10, pady=5)
-    
-    def show_dashboard(self):
-        self.clear_content()
-        tk.Label(self.content_container, text="📊 DASHBOARD", 
-                bg="#ecf0f1", font=("Arial", 20, "bold")).pack(pady=20)
-        
-        # Crear algunos widgets de dashboard
-        stats_frame = tk.Frame(self.content_container, bg="#ecf0f1")
-        stats_frame.pack(pady=20)
-        
-        for i, (titulo, valor) in enumerate([("Usuarios", "1,234"), ("Ventas", "$45,678"), ("Visitas", "9,876")]):
-            card = tk.Frame(stats_frame, bg="white", relief="raised", bd=1)
-            card.grid(row=0, column=i, padx=10, pady=10)
-            
-            tk.Label(card, text=titulo, bg="white", font=("Arial", 12, "bold")).pack(pady=5)
-            tk.Label(card, text=valor, bg="white", font=("Arial", 16), fg="#3498db").pack(pady=5)
     
     def show_configuration(self):
         self.clear_content()

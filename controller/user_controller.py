@@ -35,7 +35,7 @@ class UserController():
         user = self.user.read_user_by_username(username)
         if user:
             if self.password_manager.verify_password(password, user[2]):
-                return True
+                return user
             else:
                 return False
         else:

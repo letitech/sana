@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from view.style import StyledButton, StyledEntry
+from view.inicial_styles import StyledButton, StyledEntry
 from view.register import Register
 from view.dashboard import Dashboard
 from controller.user_controller import UserController
@@ -139,11 +139,12 @@ class Login(tk.Tk):
         password = self.password_entry.get_real_value()
         user_controller = UserController()
         if username and password:
-            if user_controller.login(username, password):
-                messagebox.showinfo("Éxito", "Bienvenido")
+            user = user_controller.login(username, password)
+            if user:
+                messagebox.showinfo("Éxito", f"Bienvenido {username}")
                 if self.dashboard_window == None:
                     self.withdraw()
-                    self.dashboard_window = Dashboard(self)
+                    self.dashboard_window = Dashboard(self, user)
                     self.dashboard_window.deiconify()
             else:
                 messagebox.showerror("Error", "Usuario o contraseña incorrecto")
